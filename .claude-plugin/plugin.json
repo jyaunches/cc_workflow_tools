@@ -1,0 +1,8 @@
+{
+  "name": "cc_workflow_tools",
+  "version": "1.0.0",
+  "description": "Spec-driven development workflow with TDD - generic commands and agents for any project",
+  "author": {
+    "name": "benzbout"
+  }
+}

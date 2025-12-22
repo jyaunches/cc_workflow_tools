@@ -1,0 +1,122 @@
+---
+name: spec
+description: Create a new specification file for the project
+usage: /spec <feature_name> "<brief_description>"
+example:
+  - /spec weather_alerts_system "Enable automated weather alerts based on location and user preferences"
+  - /spec api_caching "Add Redis caching for API responses"
+---
+
+# Create New Specification: $ARGUMENTS
+
+I'll create a comprehensive specification for this feature following this project's standards.
+
+Let me analyze the existing codebase structure and create a specification that integrates directly with the current implementation:
+
+```bash
+find specs/ -name "*.md" -type f | head -3
+```
+
+```bash
+ls -la src/
+```
+
+Based on the project's integration philosophy, I'll create a specification that:
+
+## Direct Integration Approach
+- **Enhance Existing Code**: Modify current files rather than creating parallel systems
+- **No Backward Compatibility**: Unless explicitly requested, new features become default behavior
+- **Follow Existing Patterns**: Integrate with current architecture and conventions
+
+## Specification Structure
+The specification will include:
+
+1. **Overview & Objectives**: Clear problem statement and goals
+2. **Current State Analysis**: What exists vs. what's needed
+3. **Architecture Design**: Brief, but thorough description of implementation approach (no code, mermaid charts where appropriate)
+4. **Configuration Changes**: Environment variables, dependencies, settings
+5. **Implementation Phases**: Incremental development phases with integrated acceptance criteria
+
+## Implementation Phases Structure
+Each phase must follow this incremental design:
+
+### Phase Design Principles
+1. **Incremental**: Phase 1 should be the smallest buildable core functionality
+2. **Buildable**: Each phase builds on previous phases
+3. **Testable**: Each phase includes comprehensive unit test requirements
+4. **Measurable**: Each phase has specific acceptance criteria
+
+### Phase Naming and Formatting Requirements
+
+**CRITICAL**: For `/implement_phase` command compatibility, phases MUST follow this exact format:
+
+#### Phase Headers
+- Use markdown headers (# ## ### ####) followed immediately by "Phase" and a colon
+- Format: `## Phase 1: [Descriptive Name]` or `### Phase 2: [Descriptive Name]`
+- The word "Phase" MUST be present in the header
+- Use consistent header levels (recommend ## or ###)
+
+#### Completion Marking
+- When completed, append `[COMPLETED: git-sha]` to the phase header
+- Example: `## Phase 1: Core Data Structure [COMPLETED: a1b2c3d]`
+- The `/implement_phase` command will automatically add this when phases finish
+
+#### Example Phase Headers
+```markdown
+## Phase 1: Basic Configuration Loading
+## Phase 2: Data Validation Layer
+## Phase 3: Error Handling and Logging [COMPLETED: f4e5d6c]
+```
+
+### Phase Template
+For each phase, include:
+
+**Phase X: [Phase Name]**
+- **Description**: Brief overview of what this phase accomplishes
+- **Core Functionality**: The minimal viable feature set for this phase
+- **Dependencies**: What previous phases or existing code this builds on
+- **Unit Test Requirements**:
+
+  Tests to Write:
+
+  1. **test_should_create_baseline_calculator_with_config**
+     - Input: Config with window_minutes=10
+     - Expected: Calculator instance with window=10
+
+- **Acceptance Criteria**:
+  - Measurable success conditions
+  - Performance requirements (if applicable)
+  - User-facing behavior validation
+
+**Note on Testing**: Throughout the spec, mark testable components and behaviors with clear annotations (e.g., "This component should validate...", "Edge case: when X happens..."). These will be used by the test writer agent later. Do NOT include test implementation details or test code - focus only on identifying what needs to be tested.
+
+## Implementation Guidelines
+- All code changes integrate directly into existing files
+- Follow the project's dataclass and type annotation patterns
+- Maintain configurability through environment variables
+- Include comprehensive error handling and logging
+
+## Final Phase: Clean the House
+
+Every specification MUST include a final "Clean the House" phase with the following structure:
+
+**Phase [X]: Clean the House**
+- **Description**: Post-implementation cleanup and documentation maintenance
+- **Tasks**:
+  1. **Remove Dead Code**: Identify and remove any code that became obsolete during implementation
+  2. **Update Related Documentation**: Update relevant README.md, CLAUDE.md, or other docs affected by changes
+  3. **Update IMPLEMENTATION.md**: Use `agent: implementation-writer` to update or create the service's IMPLEMENTATION.md
+- **Acceptance Criteria**:
+  - No commented-out code blocks remain (unless they serve as examples)
+  - Documentation reflects current state of implementation
+  - IMPLEMENTATION.md accurately describes how the service works
+  - All TODOs from implementation are either resolved or documented
+
+**Note**: This phase ensures our documentation stays current with code changes. The implementation-writer agent will analyze the codebase and update the IMPLEMENTATION.md file automatically.
+
+## File Creation
+I'll create the specification file in `specs/` following the naming convention: `YYYY-MM-DD_HH-mm_<feature_name>.md`
+- The date prefix uses today's date in YYYY-MM-DD_HH-mm format
+- This ensures specs are chronologically ordered by creation date
+
+Ready to proceed with creating the detailed specification for: **$ARGUMENTS**
