@@ -4,5 +4,17 @@
   "description": "Spec-driven development workflow with TDD - generic commands and agents for any project",
   "author": {
     "name": "benzbout"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/check-setup.sh"
+          }
+        ]
+      }
+    ]
   }
 }

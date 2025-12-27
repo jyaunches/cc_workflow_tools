@@ -40,13 +40,18 @@ if [ ! -d ".beads" ]; then
 fi
 
 # Check for PATTERNS.md
-if [ ! -f ".claude/PATTERNS.md" ]; then
-    echo "⚠️  WARNING: .claude/PATTERNS.md not found"
-    echo "Pattern enforcement will be limited"
+if [ -f ".claude/PATTERNS.md" ]; then
+    echo "✓ PATTERNS.md found - pattern enforcement enabled"
+else
+    echo "⚠️  PATTERNS.md not found - run /cc_workflow_tools:init to create starter template"
+    echo "   (workflow will continue but may ask about more recommendations)"
 fi
 
-# Check for workflow agents
-if [ ! -f ".claude/agents/review-executor.md" ] || [ ! -f ".claude/agents/feature-writer.md" ]; then
+# Note: Workflow agents are provided by the cc_workflow_tools plugin
+echo "✓ Workflow agents provided by cc_workflow_tools plugin"
+
+# Legacy check removed - agents no longer need to be local files
+if false; then
     echo "⚠️  WARNING: Workflow agents not found"
     echo "Expected: .claude/agents/review-executor.md and .claude/agents/feature-writer.md"
     echo "Workflow automation may not function correctly"

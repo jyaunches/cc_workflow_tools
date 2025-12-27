@@ -45,8 +45,13 @@ ls -la .beads/ 2>/dev/null || echo "BEADS_NOT_INITIALIZED"
 ```
 
 ```bash
-# Check PATTERNS.md exists (optional - used for pattern enforcement)
-ls -la .claude/PATTERNS.md 2>/dev/null || echo "PATTERNS_NOT_FOUND"
+# Check PATTERNS.md exists (optional - enhances auto-apply decisions)
+if [ -f ".claude/PATTERNS.md" ]; then
+    echo "PATTERNS.md: FOUND - pattern enforcement enabled"
+else
+    echo "PATTERNS.md: NOT FOUND - run /cc_workflow_tools:init to create starter template"
+    echo "(workflow will continue but may ask about more recommendations)"
+fi
 ```
 
 **Note**: The `review-executor` and `feature-writer` agents are provided by the cc_workflow_tools plugin. No local agent files are required.
