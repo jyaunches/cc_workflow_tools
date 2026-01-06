@@ -13,26 +13,99 @@ This plugin provides generic workflow commands and agents for any software proje
 
 ## Installation
 
-### Via Marketplace
+### Option 1: GitHub Marketplace (Recommended for New Environments)
 
-If you have access to the marketplace that hosts this plugin:
+Add the marketplace and install in one step:
 
+```bash
+# Add marketplace from GitHub
+/plugin marketplace add yourorg/cc_workflow_tools
+
+# Install the plugin
+/plugin install cc_workflow_tools@cc_workflow_tools
 ```
-/plugin marketplace add <marketplace-path>
-/plugin install cc_workflow_tools
-```
 
-### Via Local Path
-
-Add to your project's `.claude/settings.json`:
+Or configure in `.claude/settings.json`:
 
 ```json
 {
-  "enabledPlugins": [
-    "/path/to/cc_workflow_tools"
-  ]
+  "extraKnownMarketplaces": {
+    "cc_workflow_tools": {
+      "source": {
+        "source": "github",
+        "repo": "yourorg/cc_workflow_tools"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "cc_workflow_tools@cc_workflow_tools": true
+  }
 }
 ```
+
+### Option 2: Local Clone (For Development)
+
+Clone the repository to your development environment:
+
+```bash
+cd ~/Development
+git clone git@github.com:yourorg/cc_workflow_tools.git
+```
+
+Then add to your project's `.claude/settings.json`:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "cc_workflow_tools": {
+      "source": {
+        "source": "directory",
+        "path": "~/Development/cc_workflow_tools"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "cc_workflow_tools@cc_workflow_tools": true
+  }
+}
+```
+
+Or use the interactive command:
+
+```bash
+/plugin marketplace add ~/Development/cc_workflow_tools
+/plugin install cc_workflow_tools@cc_workflow_tools
+```
+
+### Option 3: Specific Branch or Tag
+
+Reference a specific version:
+
+```bash
+/plugin marketplace add yourorg/cc_workflow_tools#v1.0.0
+/plugin marketplace add yourorg/cc_workflow_tools#main
+```
+
+## Plugin Cache
+
+When the plugin is updated, Claude Code doesn't automatically pick up changes due to caching. To refresh:
+
+```bash
+rm -rf ~/.claude/plugins/cache/
+# Then restart Claude Code sessions
+```
+
+## Project Setup
+
+After installing, initialize your project:
+
+```bash
+/cc_workflow_tools:init
+```
+
+This creates:
+- `.claude/PATTERNS.md` - Defines patterns for auto-apply decisions
+- `specs/` directory - Where specifications are stored
 
 ## Commands
 
@@ -48,27 +121,36 @@ Add to your project's `.claude/settings.json`:
 | `implement-phase` | Implement a spec phase using TDD |
 | `check-work` | Validate acceptance criteria |
 | `execute-workflow` | Run the complete workflow end-to-end |
-| `design-validation` | Design validation strategy for a spec |
-| `build-validation-tool` | Build custom validation tools |
+| `post-feature` | Post-feature due diligence check |
+| `bug` | Fix a bug using TDD methodology |
 
 ### Utility Commands
 
 | Command | Description |
 |---------|-------------|
-| `capture-need` | Capture a feature need |
+| `init` | Initialize project with PATTERNS.md and specs/ |
+| `setup-project` | Scaffold a new repository with ecosystem integration |
+| `add-doc` | Create documentation in local or shared docs |
 | `fix-tests` | Run tests and fix failures |
+| `track-learning` | Capture learnings from development work |
 | `git_session_cleanup` | Clean up temporary files |
 
 ## Agents
 
 | Agent | Purpose |
 |-------|---------|
+| `spec-writer` | Creates technical specifications |
+| `review-executor` | Orchestrates the spec review phase |
 | `feature-writer` | Implements feature phases from reviewed specs |
 | `feature-architect` | Analyzes architecture and designs solutions |
-| `spec-writer` | Creates technical specifications |
 | `tests-writer` | Generates comprehensive test suites |
-| `review-executor` | Orchestrates the spec review phase |
-| `validation-researcher` | Discovers validation tools and recommends approaches |
+
+## Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `project-setup-expert` | Repository scaffolding and ecosystem integration |
+| `validation-expert` | Validation tool catalog and deployment patterns |
 
 ## Usage Example
 
@@ -78,7 +160,17 @@ Add to your project's `.claude/settings.json`:
 
 # Run the complete workflow
 /cc_workflow_tools:feature_wf:execute-workflow specs/user-auth.md
+
+# Scaffold a new project with ecosystem integration
+/cc_workflow_tools:setup-project --reference ../existing_project
 ```
+
+## Key Principles
+
+- **No backward compatibility** - Direct integration, no parallel systems
+- **TDD approach** - Write failing tests first
+- **Phase-based implementation** - Incremental, buildable phases
+- **No code in specs** - Architecture described conceptually only
 
 ## License
 
