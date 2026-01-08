@@ -462,9 +462,8 @@ Based on acceptance criteria, test results, and coverage analysis, I'll recommen
 - Comprehensive test coverage
 
 **Next Actions:**
-1. Run `/integration-review` for final validation
-2. Use `/post-feature` for documentation check
-3. Ready for deployment
+1. Run `/post-feature` to audit deployment configuration
+2. Ready for deployment
 ```
 
 ### Step 5.2: Priority Matrix
@@ -559,7 +558,7 @@ Based on acceptance criteria, test results, and coverage analysis, I'll recommen
 2. [Based on completion score]:
    - [If <70%] `/implement-phase specs/[spec] specs/[test-spec]`
    - [If >=70%] File minor bugs for remaining items
-   - [If 100%] Proceed to `/integration-review`
+   - [If 100%] Proceed to `/post-feature` for deployment config audit
 
 3. [If coverage gaps] Add recommended integration test
 
@@ -593,92 +592,18 @@ Based on acceptance criteria, test results, and coverage analysis, I'll recommen
 ### What This Command Does NOT Do
 
 - Does not write any code
-- Does not execute tests (use `/integration-review` for that)
 - Does not fix issues (use `/bug` for fixes)
-- Does not update documentation (use `/post-feature` for docs)
+- Does not update documentation (Clean the House phase handles docs)
+- Does not audit deployment config (use `/post-feature` for that)
 
 ### Integration with Other Commands
 
 **Workflow:**
 1. `/spec` → Create specification
-2. `/implement-phase` → Implement features
+2. `/implement-phase` → Implement features (includes Clean the House for docs)
 3. **`/check-work`** → Assess completion ← YOU ARE HERE
 4. `/bug` or `/implement-phase` → Address gaps
-5. `/integration-review` → Validate functionality
-6. `/post-feature` → Final documentation check
-
----
-
-## Phase 6: Documentation Validation
-
-### Step 6.1: Check IMPLEMENTATION.md Status
-
-I'll verify if the service's IMPLEMENTATION.md is current with the code changes:
-
-```bash
-echo "\n=== Checking Documentation Status ==="
-
-# Check if IMPLEMENTATION.md exists
-if [ -f "IMPLEMENTATION.md" ]; then
-    echo "✅ IMPLEMENTATION.md exists"
-
-    # Check when it was last updated
-    last_modified=$(git log -1 --format="%ar" -- IMPLEMENTATION.md)
-    echo "Last updated: $last_modified"
-
-    # Check if any mentioned files were changed recently
-    echo "\n=== Checking Referenced Files ==="
-    # Extract file paths from IMPLEMENTATION.md
-    grep -E "src/|tests/|cli/" IMPLEMENTATION.md | grep -E "\.(py|js|ts|go)" | head -10
-else
-    echo "❌ IMPLEMENTATION.md not found"
-fi
-```
-
-### Step 6.2: Run Implementation Writer Agent
-
-I'll use the implementation-writer agent to verify documentation accuracy:
-
-```markdown
-## Documentation Validation
-
-Running `agent: implementation-writer` to analyze current implementation...
-
-The agent will:
-1. Analyze the codebase structure
-2. Compare with existing IMPLEMENTATION.md (if exists)
-3. Identify any discrepancies
-4. Suggest updates if needed
-```
-
-**Agent Execution:**
-```
-agent: implementation-writer
-```
-
-### Step 6.3: Documentation Report
-
-```markdown
-## 📚 Documentation Status
-
-### Current State:
-- **IMPLEMENTATION.md**: [Exists/Missing/Outdated]
-- **Last Updated**: [Date or N/A]
-- **Accuracy**: [Current/Needs Updates/Missing]
-
-### Required Updates:
-- [ ] Update data flow section (new pipeline added)
-- [ ] Add new configuration variables
-- [ ] Update external integrations
-- [ ] Document new algorithms/logic
-
-### Documentation Health Score: [X]/10
-
-**Recommendation:**
-- ✅ Documentation is current - no action needed
-- ⚠️ Minor updates needed - review agent suggestions
-- ❌ Major updates required - run Clean the House phase
-```
+5. `/post-feature` → Audit deployment configuration
 
 ---
 

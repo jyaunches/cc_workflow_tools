@@ -107,6 +107,21 @@ This creates:
 - `.claude/PATTERNS.md` - Defines patterns for auto-apply decisions
 - `specs/` directory - Where specifications are stored
 
+### Ecosystem Mode (Optional)
+
+For multi-repository environments, `/init` offers ecosystem mode which enables cross-repo research:
+
+```bash
+# When prompted during init, choose "Yes" for ecosystem mode
+/cc_workflow_tools:init
+```
+
+This creates:
+- `.claude/skills/{project}_expert.md` - Deep repository knowledge
+- `~/.claude/ecosystem-config.json` - Registry of ecosystems
+
+With ecosystem mode, you can use the `cross-repo-researcher` agent to investigate how things work across related repositories.
+
 ## Commands
 
 ### Feature Workflow (`/cc_workflow_tools:feature_wf:*`)
@@ -128,11 +143,9 @@ This creates:
 
 | Command | Description |
 |---------|-------------|
-| `init` | Initialize project with PATTERNS.md and specs/ |
+| `init` | Initialize project with PATTERNS.md, specs/, and optional ecosystem mode |
 | `setup-project` | Scaffold a new repository with ecosystem integration |
-| `add-doc` | Create documentation in local or shared docs |
 | `fix-tests` | Run tests and fix failures |
-| `track-learning` | Capture learnings from development work |
 | `git_session_cleanup` | Clean up temporary files |
 
 ## Agents
@@ -144,6 +157,8 @@ This creates:
 | `feature-writer` | Implements feature phases from reviewed specs |
 | `feature-architect` | Analyzes architecture and designs solutions |
 | `tests-writer` | Generates comprehensive test suites |
+| `cross-repo-researcher` | Investigates across repositories in an ecosystem |
+| `validation-researcher` | Discovers validation tools and recommends approaches |
 
 ## Skills
 

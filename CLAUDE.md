@@ -53,6 +53,7 @@ Agents are Tier 2 orchestrators that route to slash commands:
 - **tests-writer**: Generates test suites
 - **feature-architect**: Analyzes architecture and designs solutions
 - **validation-researcher** (sonnet): Discovers validation tools and recommends approaches (subagent)
+- **cross-repo-researcher** (sonnet): Investigates across repositories in an ecosystem (requires ecosystem mode)
 
 ## Skills
 
@@ -77,6 +78,18 @@ When this plugin is used in a project, it expects:
 - `specs/` directory - Where specifications are stored
 
 Run `/cc_workflow_tools:init` to create these.
+
+### Ecosystem Mode (Optional)
+
+For multi-repository environments, `/init` offers optional ecosystem mode which enables:
+- `.claude/skills/{project}_expert.md` - Deep repository knowledge for cross-repo research
+- `~/.claude/ecosystem-config.json` - Registry of ecosystems and their base paths
+- **cross-repo-researcher** agent - Investigate how things work across related repositories
+
+Ecosystem mode is useful when:
+- Working with multiple related services/repositories
+- Debugging cross-service issues
+- Designing features that integrate with other repositories
 
 ### New Repository Setup
 

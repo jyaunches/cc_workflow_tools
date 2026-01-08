@@ -101,15 +101,15 @@ Every specification MUST include a final "Clean the House" phase with the follow
 - **Description**: Post-implementation cleanup and documentation maintenance
 - **Tasks**:
   1. **Remove Dead Code**: Identify and remove any code that became obsolete during implementation
-  2. **Update Related Documentation**: Update relevant README.md, CLAUDE.md, or other docs affected by changes
-  3. **Update IMPLEMENTATION.md**: Use `agent: implementation-writer` to update or create the service's IMPLEMENTATION.md
+  2. **Update README.md**: Update user-facing documentation affected by changes
+  3. **Update CLAUDE.md**: Update architecture, patterns, and development commands
+  4. **Resolve TODOs**: Address or document any TODOs from implementation
 - **Acceptance Criteria**:
   - No commented-out code blocks remain (unless they serve as examples)
   - Documentation reflects current state of implementation
-  - IMPLEMENTATION.md accurately describes how the service works
   - All TODOs from implementation are either resolved or documented
 
-**Note**: This phase ensures our documentation stays current with code changes. The implementation-writer agent will analyze the codebase and update the IMPLEMENTATION.md file automatically.
+**Note**: This phase ensures documentation stays current with code changes. After completing this phase, run `/post-feature` to audit deployment configuration.
 
 ## File Creation
 I'll create the specification file in `specs/` following the naming convention: `YYYY-MM-DD_HH-mm_<feature_name>.md`

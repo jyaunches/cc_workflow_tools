@@ -168,6 +168,23 @@ Categories:
 4. Other (specify)
 ```
 
+### Question 2.6: Ecosystem Mode
+
+```
+Is this repository part of a multi-repo ecosystem?
+
+Ecosystem mode enables:
+- Expert skill file for deep repository knowledge
+- Cross-repo research using the cross-repo-researcher agent
+- Shared context with related repositories
+
+Options:
+1. Yes - Create skills directory and expert skill
+2. No - Standard project without ecosystem features
+```
+
+**If YES**: Also ask which ecosystem this belongs to (from ~/.claude/ecosystem-config.json or create new).
+
 ## Phase 3: Generate Scaffolding
 
 Based on the answers, generate the project structure.
@@ -175,7 +192,14 @@ Based on the answers, generate the project structure.
 ### Step 3.1: Create Directory Structure
 
 ```bash
-mkdir -p {project_name}/{.claude/skills,src/{package_name},tests,docs/specs,.github/workflows}
+# Basic structure (always)
+mkdir -p {project_name}/{.claude,src/{package_name},tests,docs/specs,.github/workflows}
+
+# Ecosystem mode only
+if [ "$ECOSYSTEM_MODE" = "yes" ]; then
+    mkdir -p {project_name}/.claude/skills
+fi
+
 cd {project_name}
 git init
 ```
@@ -360,15 +384,47 @@ if __name__ == "__main__":
     main()
 ```
 
-### Step 3.8: Create Expert Skill
+### Step 3.8: Create Expert Skill (Ecosystem Mode Only)
 
-**`.claude/skills/{project}_expert.md`**:
+**Skip this step if ecosystem mode is disabled.**
+
+If ecosystem mode is enabled, create **`.claude/skills/{project}_expert.md`**:
 ```markdown
 # {Project} Expert Skill
 
-You are an expert on the {project_name} system...
-{Generated based on project type and purpose}
+You are an expert on the {project_name} system. You have deep knowledge of how it works, why design decisions were made, and how to debug or extend it.
+
+## Core Expertise
+
+You are an expert in:
+
+1. **[Domain Area 1]**
+   - [Key knowledge points]
+
+2. **[Domain Area 2]**
+   - [Key knowledge points]
+
+## Architecture Overview
+
+[Describe the high-level architecture]
+
+## Key Patterns
+
+[Document important patterns used in this codebase]
+
+## When to Invoke This Skill
+
+Invoke this skill when:
+- Working on features that touch [specific areas]
+- Debugging issues related to [specific functionality]
+- Understanding how [specific component] works
+
+---
+
+**Remember:** This skill provides deep context. Update it when major architectural changes occur.
 ```
+
+Also update `~/.claude/ecosystem-config.json` with this repository's ecosystem entry.
 
 ### Step 3.9: Create Supporting Files
 
@@ -428,7 +484,7 @@ Created Files:
   ├── .claude/
   │   ├── settings.json (plugins configured)
   │   ├── commands -> {symlink_target}
-  │   └── skills/{project}_expert.md
+  │   └── skills/{project}_expert.md  (ecosystem mode only)
   ├── src/{package}/
   │   ├── __init__.py
   │   └── {entry_files}
