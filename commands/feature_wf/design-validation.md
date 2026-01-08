@@ -214,6 +214,8 @@ Once validation approaches are selected, I'll add a validation phase to your spe
 
 **Deployment Type**: [identified type]
 
+**Automation Note**: All validation steps should be fully automated. If a step requires manual intervention (e.g., OAuth login, QR code scan), note it explicitly and provide a fallback or skip instruction for automated runs.
+
 **Data Flow**:
 ```
 [Component A] → [Component B] → [Component C] → [Final State]
@@ -226,6 +228,8 @@ This validation uses **real data** and verifies **real state changes**:
 2. Trigger actual user actions (via browser automation if needed)
 3. Verify each hop in the data flow completed
 4. Verify final state changes (database, files, etc.)
+
+**For Automated Execution**: Execute all steps sequentially without pausing. If a step fails, log the failure and continue to the next step where possible.
 
 **Validation Steps**:
 

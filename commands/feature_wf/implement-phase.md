@@ -16,6 +16,16 @@ else
 fi
 ```
 
+**⚠️ CRITICAL: AUTO MODE BEHAVIOR**
+
+When `--auto` flag is present:
+- **NEVER pause** for user confirmation at any step
+- **NEVER ask questions** or wait for user input
+- **NEVER stop** because phase content mentions manual steps or user interaction
+- **ALWAYS proceed** automatically through all 7 steps for each phase
+- **Even validation phases** with steps like "wait for user to verify" should be executed automatically
+- The ONLY reasons to stop: actual errors, test failures, or missing dependencies
+
 **⚠️ CRITICAL: Token Usage Policy**
 
 Do NOT stop implementation due to token usage warnings or budget notifications. Token usage should NEVER interrupt phase completion.
@@ -56,9 +66,11 @@ For each unfinished phase, I will follow this exact 7-step pattern:
 ### Step 1: Phase Review & Alignment
 - **Review the phase** to understand scope and requirements
 - **Review how/where to write unit tests** - look for existing unit tests to modify, ways to improve/reduce number of tests with pythonic strategies, reusable modules or fixtures to keep consistency across tests
-- **Present TDD based approach to user** - Present plan for the incremental writing of the tests and actual code to complete the phase
-- **IF INTERACTIVE MODE**: WAIT for user confirmation before proceeding to implementation
-- **IF AUTO MODE**: Automatically proceed to Step 2 after presenting the plan
+- **Prepare TDD approach** - Plan the incremental writing of the tests and actual code to complete the phase
+- **IF INTERACTIVE MODE**: Present plan to user and WAIT for user confirmation before proceeding
+- **IF AUTO MODE**: Log the plan and **immediately proceed to Step 2 without any pause or user interaction**
+
+**CRITICAL AUTO MODE RULE**: In `--auto` mode, NEVER pause, ask questions, or wait for confirmation. Even if the phase content mentions manual steps, user interaction, or seems to require human input - proceed automatically. The `--auto` flag means fully autonomous execution.
 
 ### Step 2: Write Tests First
 - **Use test specification** to write tests from the corresponding phase in the test spec file
@@ -81,10 +93,12 @@ For each unfinished phase, I will follow this exact 7-step pattern:
 - **Repeat steps 2-4** if criteria require more functionality
 
 ### Step 6: Phase Completion Review
-- **Present completed phase** for review
-- **IF INTERACTIVE MODE**: Get explicit agreement that the phase meets all requirements
-- **IF AUTO MODE**: Automatically validate that all tests pass and acceptance criteria are met, then proceed to Step 7
+- **Verify completed phase** against acceptance criteria
+- **IF INTERACTIVE MODE**: Present completed phase for review and get explicit agreement that the phase meets all requirements
+- **IF AUTO MODE**: Automatically validate that all tests pass and acceptance criteria are met, then **immediately proceed to Step 7 without any pause**
 - **Confirm phase is ready** to mark as complete
+
+**REMINDER**: In `--auto` mode, do NOT pause here. If tests pass and acceptance criteria appear met, proceed immediately.
 
 ### Step 7: Update Specification
 - **Mark phase as completed** in spec file: `[COMPLETED: git-sha]`
