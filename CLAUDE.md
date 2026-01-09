@@ -6,28 +6,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Claude Code plugin (`cc_workflow_tools`) that provides spec-driven development workflow commands and agents. It implements a structured approach to feature development: Spec Creation → Spec Review → TDD Implementation → Validation.
 
-## Plugin Structure
+## Repository Structure (Marketplace Layout)
 
 ```
-.claude-plugin/plugin.json    # Plugin manifest with hooks
-commands/                     # Slash commands (markdown files)
-  spec.md                     # Create new specification
-  execute-wf.md               # Run full automated workflow
-  spec/                       # Spec support commands
-    design-validation.md      # Add validation phase to spec
-    build-validation-tool.md  # Build custom validation tools
-  execute-wf/                 # Workflow support commands
-    spec-simplify.md          # Simplification review
-    spec-tests.md             # Generate test spec
-    spec-review-design.md     # Design review
-    spec-review-implementation.md
-    take-recommendations.md   # Apply review recommendations
-    implement-phase.md        # TDD phase implementation
-    check-work.md             # Validation
-  init.md, fix-tests.md, etc. # Utility commands
-agents/                       # Agent definitions (markdown files)
-skills/                       # Expert skills (markdown files)
-hooks/                        # Session hooks (shell scripts)
+cc_workflow_tools/                    # Marketplace root
+├── .claude-plugin/
+│   └── marketplace.json              # Marketplace manifest
+├── plugins/
+│   └── cc_workflow_tools/            # Plugin directory
+│       ├── .claude-plugin/
+│       │   └── plugin.json           # Plugin manifest
+│       ├── commands/                 # Slash commands
+│       │   ├── spec.md               # Create new specification
+│       │   ├── execute-wf.md         # Run full automated workflow
+│       │   ├── spec/                 # Spec support commands
+│       │   └── execute-wf/           # Workflow support commands
+│       ├── agents/                   # Agent definitions
+│       ├── skills/                   # Expert skills
+│       ├── hooks/                    # Session hooks
+│       └── shared_docs/              # Shared documentation
+├── CLAUDE.md                         # This file
+└── README.md                         # User documentation
 ```
 
 ## Key Workflows
