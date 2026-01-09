@@ -5,6 +5,26 @@ description: Complete reference for Claude Code plugin marketplace system. Use w
 
 # Claude Code Plugin Marketplace - Complete Reference
 
+## CRITICAL: After Editing This Plugin
+
+**Every time you modify files in this plugin (commands, agents, skills, etc.):**
+
+1. **Commit and PUSH to GitHub:**
+   ```bash
+   git add -A && git commit -m "description" && git push origin main
+   ```
+
+2. **Tell the user to update the plugin:**
+   ```
+   Plugin changes have been pushed. To apply them:
+   1. Run: /plugin marketplace update
+   2. Restart Claude Code
+   ```
+
+Without pushing, changes only exist locally. Without updating, users won't see the changes.
+
+---
+
 ## Overview
 
 The Claude Code plugin system extends Claude Code with custom slash commands, agents, hooks, Skills, and MCP servers. Plugins are distributed through marketplaces.
@@ -455,6 +475,8 @@ cat ~/.claude/plugins/installed_plugins.json | jq "del(.plugins[\"${PLUGIN}@${MA
 
 ### Distributing Updates
 - [ ] Bump version in `plugin.json`
-- [ ] Update CHANGELOG.md
-- [ ] Push to GitHub
-- [ ] Notify users to run `/plugin marketplace update`
+- [ ] **PUSH to GitHub** (changes don't exist remotely until pushed!)
+- [ ] Tell user: "Run `/plugin marketplace update` then restart Claude Code"
+
+**IMPORTANT**: If you edit this plugin and don't push, the changes only exist locally.
+Users (including yourself in new sessions) won't see updates until you push AND they update.
