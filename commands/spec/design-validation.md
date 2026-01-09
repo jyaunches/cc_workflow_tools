@@ -192,7 +192,7 @@ If you select "Build Custom" for any requirement and approve the design:
 
 ```bash
 # Build the validation tool in cc_workflow_tools
-/cc_workflow_tools:feature_wf:build-validation-tool "<tool_name>" "<description>"
+/cc_workflow_tools:spec:build-validation-tool "<tool_name>" "<description>"
 ```
 
 This will:

@@ -91,13 +91,13 @@ Use this guidance to inform your review decisions, simplifications, and recommen
 [End if]
 
 Run the following commands in sequence:
-1. /feature_wf:spec-simplify $SPEC_FILE --auto-apply
-2. /feature_wf:spec-tests $SPEC_FILE
-3. /feature_wf:spec-review-design $SPEC_FILE <test_spec_file> --auto-apply
-4. /feature_wf:spec-review-implementation $SPEC_FILE <test_spec_file> --auto-apply
+1. /execute-wf:spec-simplify $SPEC_FILE --auto-apply
+2. /execute-wf:spec-tests $SPEC_FILE
+3. /execute-wf:spec-review-design $SPEC_FILE <test_spec_file> --auto-apply
+4. /execute-wf:spec-review-implementation $SPEC_FILE <test_spec_file> --auto-apply
 
 For each review command:
-- Auto-apply safe recommendations using /feature_wf:take-recommendations
+- Auto-apply safe recommendations using /execute-wf:take-recommendations
 - Pause only for architectural decisions needing user approval
 - Track all changes via git commits
 - Consider the additional guidance when making decisions
@@ -167,15 +167,22 @@ Implement the feature defined in reviewed specs: $SPEC_FILE
 
 The beads epic and phase tasks have been created based on the reviewed specs.
 
-Your responsibilities:
-1. Query beads for the next ready phase task (bd ready --json)
-2. Based on the task title, execute the appropriate command:
-   - "Phase N: ..." → /feature_wf:implement-phase $SPEC_FILE <test_spec_file> --auto
-   - "Validation" → /feature_wf:check-work $SPEC_FILE <test_spec_file>
-3. Before executing each phase, update the task to in_progress
-4. After successful completion, close the task
-5. If blocked, update task with issue details
-6. Continue until all phases and validation complete
+⚠️ CRITICAL: Do NOT spawn another feature-writer agent. Execute ALL phases
+in THIS invocation using an internal loop. After completing each phase,
+query beads for the next ready task and continue - do not spawn a new agent.
+
+Your responsibilities (in a loop):
+1. Query beads for the next ready task (bd ready --json)
+2. If no ready tasks and epic closed → EXIT SUCCESS
+3. If ready task exists:
+   - Update task to in_progress
+   - Execute the appropriate command based on task title
+   - Close the task on success
+   - Loop back to step 1 (DO NOT spawn new agent)
+
+Task routing:
+- "Phase N: ..." → /execute-wf:implement-phase $SPEC_FILE <test_spec_file> --auto
+- "Validation" → /execute-wf:check-work $SPEC_FILE <test_spec_file>
 
 Key details:
 - Spec file: $SPEC_FILE
@@ -190,8 +197,8 @@ When all tasks complete:
 
 **Feature-writer agent will:**
 - Query beads for ready tasks
-- Execute `/feature_wf:implement-phase` for each phase
-- Execute `/feature_wf:check-work` for validation
+- Execute `/execute-wf:implement-phase` for each phase
+- Execute `/execute-wf:check-work` for validation
 - Update beads task status throughout
 - Generate completion summary
 

@@ -425,7 +425,7 @@ Based on acceptance criteria, test results, and coverage analysis, I'll recommen
 
 **Specific Command:**
 ```bash
-/feature_wf:implement-phase specs/[spec-file] specs/[test-spec-file]
+/execute-wf:implement-phase specs/[spec-file] specs/[test-spec-file]
 ```
 
 **Focus Areas:**
@@ -462,8 +462,7 @@ Based on acceptance criteria, test results, and coverage analysis, I'll recommen
 - Comprehensive test coverage
 
 **Next Actions:**
-1. Run `/post-feature` to audit deployment configuration
-2. Ready for deployment
+1. Ready for deployment
 ```
 
 ### Step 5.2: Priority Matrix
@@ -558,7 +557,7 @@ Based on acceptance criteria, test results, and coverage analysis, I'll recommen
 2. [Based on completion score]:
    - [If <70%] `/implement-phase specs/[spec] specs/[test-spec]`
    - [If >=70%] File minor bugs for remaining items
-   - [If 100%] Proceed to `/post-feature` for deployment config audit
+   - [If 100%] Ready for deployment
 
 3. [If coverage gaps] Add recommended integration test
 
@@ -594,7 +593,6 @@ Based on acceptance criteria, test results, and coverage analysis, I'll recommen
 - Does not write any code
 - Does not fix issues (use `/bug` for fixes)
 - Does not update documentation (Clean the House phase handles docs)
-- Does not audit deployment config (use `/post-feature` for that)
 
 ### Integration with Other Commands
 
@@ -603,7 +601,7 @@ Based on acceptance criteria, test results, and coverage analysis, I'll recommen
 2. `/implement-phase` → Implement features (includes Clean the House for docs)
 3. **`/check-work`** → Assess completion ← YOU ARE HERE
 4. `/bug` or `/implement-phase` → Address gaps
-5. `/post-feature` → Audit deployment configuration
+5. Ready for deployment
 
 ---
 

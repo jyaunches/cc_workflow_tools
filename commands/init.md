@@ -133,4 +133,4 @@ After running this command, you should have:
 - `.claude/skills/{project}_expert.md` - Expert knowledge for this repo
 - `~/.claude/ecosystem-config.json` - Registry of your ecosystems
 
-The workflow commands (`/cc_workflow_tools:feature_wf:execute-workflow`, etc.) use the plugin's `shared_docs/PATTERNS.md` to guide auto-apply decisions.
+The workflow commands (`/cc_workflow_tools:execute-wf`, etc.) use the plugin's `shared_docs/PATTERNS.md` to guide auto-apply decisions.

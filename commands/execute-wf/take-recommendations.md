@@ -14,9 +14,9 @@ Apply specific recommendations from a spec-review session by section number, upd
 ## Usage
 
 ```bash
-/feature_wf:take-recommendations sections: 1, 2, 4
-/feature_wf:take-recommendations sections: 1,3,5
-/feature_wf:take-recommendations sections: 2
+/execute-wf:take-recommendations sections: 1, 2, 4
+/execute-wf:take-recommendations sections: 1,3,5
+/execute-wf:take-recommendations sections: 2
 ```
 
 This command is designed to work during an active `/spec_review` session where numbered sections have been presented.
@@ -90,12 +90,12 @@ This command is specifically designed to work with the updated `/spec_review` co
 
 ```bash
 # Start a spec review
-/feature_wf:spec-review-design @specs/feature.md @specs/tests_feature.md
+/execute-wf:spec-review-design @specs/feature.md @specs/tests_feature.md
 
 # Review presents numbered sections 1-7 with recommendations
 # User decides to take recommendations for sections 1, 3, and 5
 
-/feature_wf:take-recommendations sections: 1, 3, 5
+/execute-wf:take-recommendations sections: 1, 3, 5
 
 # Command processes each section, updates files, and commits
 # User can then continue with remaining sections or finish review

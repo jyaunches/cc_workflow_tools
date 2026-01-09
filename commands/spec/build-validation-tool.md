@@ -79,7 +79,7 @@ The specification will include:
 Run the spec command to create the full specification:
 
 ```bash
-/cc_workflow_tools:feature_wf:spec "$TOOL_NAME" "$DESCRIPTION"
+/cc_workflow_tools:spec "$TOOL_NAME" "$DESCRIPTION"
 ```
 
 ---
@@ -89,7 +89,7 @@ Run the spec command to create the full specification:
 After the spec is created, implement the tool:
 
 ```bash
-/cc_workflow_tools:feature_wf:execute-workflow "$SPEC_FILE"
+/cc_workflow_tools:execute-wf "$SPEC_FILE"
 ```
 
 This will:

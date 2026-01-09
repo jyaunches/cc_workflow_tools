@@ -17,16 +17,16 @@ Review a specification for unnecessary complexity and over-engineering. This is 
 
 ```bash
 # Manual mode - prompts for user decision
-/feature_wf:spec-simplify @specs/2025-10-31_22-00_cli-analyze-intraday-impact.md
+/execute-wf:spec-simplify @specs/2025-10-31_22-00_cli-analyze-intraday-impact.md
 
 # Auto-apply mode - automatically applies safe recommendations
-/feature_wf:spec-simplify @specs/2025-10-31_22-00_cli-analyze-intraday-impact.md --auto-apply
+/execute-wf:spec-simplify @specs/2025-10-31_22-00_cli-analyze-intraday-impact.md --auto-apply
 
 # With test spec
-/feature_wf:spec-simplify @specs/2025-10-31_22-00_cli-analyze-intraday-impact.md @specs/tests_2025-10-31_cli-analyze-intraday-impact.md --auto-apply
+/execute-wf:spec-simplify @specs/2025-10-31_22-00_cli-analyze-intraday-impact.md @specs/tests_2025-10-31_cli-analyze-intraday-impact.md --auto-apply
 ```
 
-You can type `/feature_wf:spec-simplify @` and Claude will provide file path suggestions as you type.
+You can type `/execute-wf:spec-simplify @` and Claude will provide file path suggestions as you type.
 
 ## Description
 
@@ -253,7 +253,7 @@ For each recommendation, determine category:
 
 For recommendations in "Auto-Apply" category:
 - Collect section numbers for auto-applicable simplifications
-- Use `/feature_wf:take-recommendations sections: X, Y, Z` to apply them
+- Use `/execute-wf:take-recommendations sections: X, Y, Z` to apply them
 - Each section creates a git commit tracking the change
 
 **Step 3: Present Remaining Recommendations**
@@ -322,7 +322,7 @@ If no, remove it.
 
 ## Change Tracking
 
-All simplification changes are tracked via git commits created by `/feature_wf:take-recommendations`:
+All simplification changes are tracked via git commits created by `/execute-wf:take-recommendations`:
 - Each applied section creates a separate commit
 - Commit message format: "Apply spec review recommendation from section X"
 - View changes: `git log --oneline` to see all simplifications applied

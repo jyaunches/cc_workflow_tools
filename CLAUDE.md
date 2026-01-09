@@ -11,7 +11,19 @@ This is a Claude Code plugin (`cc_workflow_tools`) that provides spec-driven dev
 ```
 .claude-plugin/plugin.json    # Plugin manifest with hooks
 commands/                     # Slash commands (markdown files)
-  feature_wf/                 # Feature workflow commands
+  spec.md                     # Create new specification
+  execute-wf.md               # Run full automated workflow
+  spec/                       # Spec support commands
+    design-validation.md      # Add validation phase to spec
+    build-validation-tool.md  # Build custom validation tools
+  execute-wf/                 # Workflow support commands
+    spec-simplify.md          # Simplification review
+    spec-tests.md             # Generate test spec
+    spec-review-design.md     # Design review
+    spec-review-implementation.md
+    take-recommendations.md   # Apply review recommendations
+    implement-phase.md        # TDD phase implementation
+    check-work.md             # Validation
   init.md, fix-tests.md, etc. # Utility commands
 agents/                       # Agent definitions (markdown files)
 skills/                       # Expert skills (markdown files)
@@ -21,14 +33,14 @@ hooks/                        # Session hooks (shell scripts)
 ## Key Workflows
 
 ### Complete Feature Workflow
-`/cc_workflow_tools:feature_wf:execute-workflow <spec_file>` runs the full automated workflow:
+`/cc_workflow_tools:execute-wf <spec_file>` runs the full automated workflow:
 
 1. **Review Phase** (review-executor agent): Simplify spec → Generate test spec → Design review → Implementation review
 2. **Implementation Phase** (feature-writer agent): TDD phase-by-phase implementation with beads tracking
 
 ### Manual Steps
-- `/cc_workflow_tools:feature_wf:spec <name> "<description>"` - Create new specification (includes validation design Q&A)
-- `/cc_workflow_tools:feature_wf:implement-phase <spec> <test_spec> [--auto]` - Execute implementation phases
+- `/cc_workflow_tools:spec <name> "<description>"` - Create new specification (includes validation design Q&A)
+- `/cc_workflow_tools:execute-wf:implement-phase <spec> <test_spec> [--auto]` - Execute implementation phases
 
 ### Validation Design Workflow
 

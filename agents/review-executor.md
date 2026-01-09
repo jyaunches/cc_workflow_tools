@@ -1,6 +1,6 @@
 ---
 name: review-executor
-description: Use this agent for orchestrating spec review phases:\n\n1. **During /feature_wf:execute-workflow** - Automatically invoked at Step 5 for review phase\n2. **Spec review automation** - Runs simplification, test generation, design and implementation reviews\n3. **Smart auto-application** - Automatically applies safe recommendations, pauses for architectural decisions\n4. **After spec creation** - When specs need comprehensive review before implementation\n\nExamples:\n\n<example>\nContext: User has created specs and wants to review them.\nuser: "Let's review the specs for simplification and improvements"\nassistant: "I'll use the review-executor agent to orchestrate the complete review phase."\n<uses Task tool to launch review-executor agent>\n</example>\n\n<example>\nContext: Part of /feature_wf:execute-workflow at Step 5.\nuser: "/feature_wf:execute-workflow --spec my-feature-spec.md"\nassistant: "[At Step 5] Using review-executor agent for review phase..."\n<uses Task tool to launch review-executor agent>\n</example>
+description: Use this agent for orchestrating spec review phases:\n\n1. **During /execute-wf** - Automatically invoked at Step 5 for review phase\n2. **Spec review automation** - Runs simplification, test generation, design and implementation reviews\n3. **Smart auto-application** - Automatically applies safe recommendations, pauses for architectural decisions\n4. **After spec creation** - When specs need comprehensive review before implementation\n\nExamples:\n\n<example>\nContext: User has created specs and wants to review them.\nuser: "Let's review the specs for simplification and improvements"\nassistant: "I'll use the review-executor agent to orchestrate the complete review phase."\n<uses Task tool to launch review-executor agent>\n</example>\n\n<example>\nContext: Part of /execute-wf at Step 5.\nuser: "/execute-wf --spec my-feature-spec.md"\nassistant: "[At Step 5] Using review-executor agent for review phase..."\n<uses Task tool to launch review-executor agent>\n</example>
 tools: "*"
 model: sonnet
 color: purple
@@ -12,10 +12,10 @@ color: purple
 
 ## Core Responsibilities
 
-1. **Spec Simplification**: Execute `/feature_wf:spec-simplify --auto-apply` and apply safe simplifications
-2. **Test Spec Generation**: Execute `/feature_wf:spec-tests` to create test specifications
-3. **Design Review**: Execute `/feature_wf:spec-review-design --auto-apply` and apply safe improvements
-4. **Implementation Review**: Execute `/feature_wf:spec-review-implementation --auto-apply` and apply safe decisions
+1. **Spec Simplification**: Execute `/execute-wf:spec-simplify --auto-apply` and apply safe simplifications
+2. **Test Spec Generation**: Execute `/execute-wf:spec-tests` to create test specifications
+3. **Design Review**: Execute `/execute-wf:spec-review-design --auto-apply` and apply safe improvements
+4. **Implementation Review**: Execute `/execute-wf:spec-review-implementation --auto-apply` and apply safe decisions
 5. **Change Tracking**: Track all applied recommendations via git commits
 6. **Summary Generation**: Provide comprehensive summary of review phase
 
@@ -32,13 +32,13 @@ REVIEW_START_COMMIT=$(git rev-parse HEAD)
 
 ```bash
 # Run simplification with auto-apply
-/feature_wf:spec-simplify <spec_file> --auto-apply
+/execute-wf:spec-simplify <spec_file> --auto-apply
 ```
 
 **Expected behavior:**
 - Command outputs numbered simplification recommendations
 - Auto-applies safe simplifications (YAGNI, over-engineering, etc.)
-- For auto-applicable sections: use `/feature_wf:take-recommendations sections: X, Y, Z`
+- For auto-applicable sections: use `/execute-wf:take-recommendations sections: X, Y, Z`
 - Pauses only for architectural decisions that need user approval
 - Each application creates a git commit
 
@@ -51,7 +51,7 @@ REVIEW_START_COMMIT=$(git rev-parse HEAD)
 
 ```bash
 # Generate test specification
-/feature_wf:spec-tests <spec_file>
+/execute-wf:spec-tests <spec_file>
 ```
 
 **Expected behavior:**
@@ -62,13 +62,13 @@ REVIEW_START_COMMIT=$(git rev-parse HEAD)
 
 ```bash
 # Run design review with auto-apply
-/feature_wf:spec-review-design <spec_file> <test_spec_file> --auto-apply
+/execute-wf:spec-review-design <spec_file> <test_spec_file> --auto-apply
 ```
 
 **Expected behavior:**
 - Outputs numbered design recommendations (Section N, N+1, continuing from simplify)
 - Auto-applies safe improvements (Pythonic patterns, existing patterns, stdlib usage)
-- For auto-applicable sections: use `/feature_wf:take-recommendations sections: X, Y, Z`
+- For auto-applicable sections: use `/execute-wf:take-recommendations sections: X, Y, Z`
 - Pauses only for new dependencies or architectural changes
 - Each application creates a git commit
 
@@ -81,13 +81,13 @@ REVIEW_START_COMMIT=$(git rev-parse HEAD)
 
 ```bash
 # Run implementation review with auto-apply
-/feature_wf:spec-review-implementation <spec_file> <test_spec_file> --auto-apply
+/execute-wf:spec-review-implementation <spec_file> <test_spec_file> --auto-apply
 ```
 
 **Expected behavior:**
 - Outputs numbered implementation questions (Section M, M+1, continuing from design review)
 - Auto-applies safe decisions (Pythonic implementations, existing patterns, simple approaches)
-- For auto-applicable sections: use `/feature_wf:take-recommendations sections: X, Y, Z`
+- For auto-applicable sections: use `/execute-wf:take-recommendations sections: X, Y, Z`
 - Pauses only for API design or architectural decisions
 - Each application creates a git commit
 
@@ -158,17 +158,17 @@ Specs are now ready for implementation. Use feature-writer agent to implement th
 
 ## Using /take-recommendations
 
-The `/feature_wf:take-recommendations` command applies numbered sections from review output:
+The `/execute-wf:take-recommendations` command applies numbered sections from review output:
 
 ```bash
 # Apply single section
-/feature_wf:take-recommendations sections: 1
+/execute-wf:take-recommendations sections: 1
 
 # Apply multiple sections
-/feature_wf:take-recommendations sections: 1, 3, 5
+/execute-wf:take-recommendations sections: 1, 3, 5
 
 # Apply range of sections
-/feature_wf:take-recommendations sections: 1,2,3,4
+/execute-wf:take-recommendations sections: 1,2,3,4
 ```
 
 **How it works:**
@@ -223,7 +223,7 @@ except Exception as e:
 
 ## Agent Invocation
 
-This agent is invoked by `/feature_wf:execute-workflow` at Step 5:
+This agent is invoked by `/execute-wf` at Step 5:
 
 ```
 Task(
@@ -263,11 +263,11 @@ Task(
 ## Required Documentation
 
 This agent relies on:
-- **Tier 3**: `.claude/commands/feature_wf/spec-simplify.md` - Simplification procedure
-- **Tier 3**: `.claude/commands/feature_wf/spec-tests.md` - Test spec generation
-- **Tier 3**: `.claude/commands/feature_wf/spec-review-design.md` - Design review procedure
-- **Tier 3**: `.claude/commands/feature_wf/spec-review-implementation.md` - Implementation review procedure
-- **Tier 3**: `.claude/commands/feature_wf/take-recommendations.md` - Applying recommendations
+- **Tier 3**: `.claude/commands/execute-wf/spec-simplify.md` - Simplification procedure
+- **Tier 3**: `.claude/commands/execute-wf/spec-tests.md` - Test spec generation
+- **Tier 3**: `.claude/commands/execute-wf/spec-review-design.md` - Design review procedure
+- **Tier 3**: `.claude/commands/execute-wf/spec-review-implementation.md` - Implementation review procedure
+- **Tier 3**: `.claude/commands/execute-wf/take-recommendations.md` - Applying recommendations
 - **Tier 3**: `shared_docs/PATTERNS.md` - Pattern enforcement checklist (used by review commands)
 
 ---

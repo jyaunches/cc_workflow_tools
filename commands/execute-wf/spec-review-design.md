@@ -17,13 +17,13 @@ Review a specification and its test specification for design improvements and ar
 
 ```bash
 # Manual mode - prompts for user decision
-/feature_wf:spec-review-design @specs/2025-01-08_weather_api_integration.md @specs/tests_2025-01-08_weather_api_integration.md
+/execute-wf:spec-review-design @specs/2025-01-08_weather_api_integration.md @specs/tests_2025-01-08_weather_api_integration.md
 
 # Auto-apply mode - automatically applies safe recommendations
-/feature_wf:spec-review-design @specs/2025-01-08_weather_api_integration.md @specs/tests_2025-01-08_weather_api_integration.md --auto-apply
+/execute-wf:spec-review-design @specs/2025-01-08_weather_api_integration.md @specs/tests_2025-01-08_weather_api_integration.md --auto-apply
 ```
 
-You can type `/feature_wf:spec-review-design @` and Claude will provide file path suggestions as you type.
+You can type `/execute-wf:spec-review-design @` and Claude will provide file path suggestions as you type.
 
 ## Description
 
@@ -78,7 +78,7 @@ Automatically applies safe recommendations, pauses only for architectural decisi
      - New external dependencies (libraries not yet in codebase)
      - Breaking API changes
      - Major refactoring
-3. **Apply Auto-Recommendations**: Use `/feature_wf:take-recommendations sections: X, Y, Z` to apply safe recommendations
+3. **Apply Auto-Recommendations**: Use `/execute-wf:take-recommendations sections: X, Y, Z` to apply safe recommendations
 4. **Present Remaining Items**: Show only recommendations that need user discussion
 5. **User Choice for Remaining Items**: Accept all remaining (via `/take-recommendations`), discuss individually, or skip
 6. **Update Files**: Apply remaining changes based on user feedback
@@ -108,7 +108,7 @@ Phase 1 will present structured recommendations with numbered sections (1-4):
 
 ## Change Tracking
 
-All design improvements are tracked via git commits created by `/feature_wf:take-recommendations`:
+All design improvements are tracked via git commits created by `/execute-wf:take-recommendations`:
 - Each applied section creates a separate commit
 - Commit message format: "Apply spec review recommendation from section X"
 - Section numbering continues from spec-simplify phase

@@ -10,7 +10,7 @@ Create comprehensive test guides aligned with specification phases for increment
 ## Usage
 
 ```
-/feature_wf:spec-tests @<spec-file> [instructions]
+/execute-wf:spec-tests @<spec-file> [instructions]
 ```
 
 ## Purpose

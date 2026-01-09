@@ -7,7 +7,7 @@ argument-hint: <feature_name> "<description>"
 
 Create a new specification file for the project.
 
-**Usage**: `/cc_workflow_tools:feature_wf:spec <feature_name> "<brief_description>"`
+**Usage**: `/cc_workflow_tools:spec <feature_name> "<brief_description>"`
 
 ## Create New Specification: $ARGUMENTS
 
@@ -36,7 +36,15 @@ The specification will include:
 1. **Overview & Objectives**: Clear problem statement and goals
 2. **Current State Analysis**: What exists vs. what's needed
 3. **Architecture Design**: Brief, but thorough description of implementation approach (no code, mermaid charts where appropriate)
-4. **Configuration Changes**: Environment variables, dependencies, settings
+4. **Configuration & Deployment Changes**: What configuration and deployment files need updating
+   - **Environment Variables**: New variables needed, with descriptions and default values
+   - **Dependencies**: New packages in `pyproject.toml`, including extras (e.g., `httpx[http2]`)
+   - **Deployment Files to Update**:
+     - `.env.example` - Document new variables for other developers
+     - `.github/workflows/*.yml` - Add new secrets/env vars to CI/CD
+     - Deployment platform config (e.g., `fly.toml`, `render.yaml`, k8s manifests) - Production env vars
+     - `Dockerfile` - New system dependencies if needed
+   - **Secrets**: New secrets needed in CI/CD or deployment platform
 5. **Implementation Phases**: Incremental development phases with integrated acceptance criteria
 
 ## Implementation Phases Structure
@@ -114,7 +122,7 @@ Every specification MUST include a final "Clean the House" phase with the follow
   - Documentation reflects current state of implementation
   - All TODOs from implementation are either resolved or documented
 
-**Note**: This phase ensures documentation stays current with code changes. After completing this phase, run `/post-feature` to audit deployment configuration.
+**Note**: This phase ensures documentation stays current with code changes.
 
 ## File Creation
 I'll create the specification file in `specs/` following the naming convention: `YYYY-MM-DD_HH-mm_<feature_name>.md`
@@ -126,7 +134,7 @@ I'll create the specification file in `specs/` following the naming convention: 
 After creating the specification file, I'll invoke the validation design command to help you define how to validate this feature works correctly:
 
 ```bash
-/cc_workflow_tools:feature_wf:design-validation <spec_file_path>
+/cc_workflow_tools:spec:design-validation <spec_file_path>
 ```
 
 This Q&A-driven phase will:

@@ -17,13 +17,13 @@ Review a specification and its test specification for implementation clarity and
 
 ```bash
 # Manual mode - prompts for user decision
-/feature_wf:spec-review-implementation @specs/2025-01-08_weather_api_integration.md @specs/tests_2025-01-08_weather_api_integration.md
+/execute-wf:spec-review-implementation @specs/2025-01-08_weather_api_integration.md @specs/tests_2025-01-08_weather_api_integration.md
 
 # Auto-apply mode - automatically applies safe implementation decisions
-/feature_wf:spec-review-implementation @specs/2025-01-08_weather_api_integration.md @specs/tests_2025-01-08_weather_api_integration.md --auto-apply
+/execute-wf:spec-review-implementation @specs/2025-01-08_weather_api_integration.md @specs/tests_2025-01-08_weather_api_integration.md --auto-apply
 ```
 
-You can type `/feature_wf:spec-review-implementation @` and Claude will provide file path suggestions as you type.
+You can type `/execute-wf:spec-review-implementation @` and Claude will provide file path suggestions as you type.
 
 ## Description
 
@@ -83,7 +83,7 @@ This format provides a clean overview table followed by detailed breakdowns for 
      - Complexity vs simplicity tradeoffs
      - Breaking changes to existing interfaces
      - Technology/library choices
-3. **Apply Auto-Recommendations**: Use `/feature_wf:take-recommendations sections: X, Y, Z` to apply safe decisions
+3. **Apply Auto-Recommendations**: Use `/execute-wf:take-recommendations sections: X, Y, Z` to apply safe decisions
 4. **Present Remaining Items**: Show only implementation questions that need user input
 5. **User Choice for Remaining Items**: Accept all remaining (via `/take-recommendations`), discuss individually, or skip
 6. **Update Files**: Apply remaining decisions based on user feedback
@@ -101,7 +101,7 @@ The review focuses on:
 
 ## Change Tracking
 
-All implementation decisions are tracked via git commits created by `/feature_wf:take-recommendations`:
+All implementation decisions are tracked via git commits created by `/execute-wf:take-recommendations`:
 - Each applied section creates a separate commit
 - Commit message format: "Apply spec review recommendation from section X"
 - Section numbering continues from Phase 1 (Design Review)

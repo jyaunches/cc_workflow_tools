@@ -125,7 +125,7 @@ With ecosystem mode, you can use the `cross-repo-researcher` agent to investigat
 
 ## Commands
 
-### Feature Workflow (`/cc_workflow_tools:feature_wf:*`)
+### Feature Workflow (`/cc_workflow_tools:spec`, `/cc_workflow_tools:execute-wf`)
 
 | Command | Description |
 |---------|-------------|
@@ -136,8 +136,6 @@ With ecosystem mode, you can use the `cross-repo-researcher` agent to investigat
 | `spec-review-implementation` | Review implementation decisions |
 | `implement-phase` | Implement a spec phase using TDD |
 | `check-work` | Validate acceptance criteria |
-| `execute-workflow` | Run the complete workflow end-to-end |
-| `post-feature` | Post-feature due diligence check |
 | `bug` | Fix a bug using TDD methodology |
 
 ### Utility Commands
@@ -172,10 +170,10 @@ With ecosystem mode, you can use the `cross-repo-researcher` agent to investigat
 
 ```bash
 # Create a spec for a new feature
-/cc_workflow_tools:feature_wf:spec "Add user authentication"
+/cc_workflow_tools:spec "Add user authentication"
 
 # Run the complete workflow
-/cc_workflow_tools:feature_wf:execute-workflow specs/user-auth.md
+/cc_workflow_tools:execute-wf specs/user-auth.md
 
 # Scaffold a new project with ecosystem integration
 /cc_workflow_tools:setup-project --reference ../existing_project
