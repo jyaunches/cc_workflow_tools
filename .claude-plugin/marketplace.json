@@ -7,11 +7,7 @@
   "plugins": [
     {
       "name": "cc_workflow_tools",
-      "source": {
-        "source": "github",
-        "repo": "jyaunches/cc_workflow_tools",
-        "path": "plugins/cc_workflow_tools"
-      },
+      "source": "./plugins/cc_workflow_tools",
       "description": "Spec-driven development workflow commands, agents, and skills"
     }
   ]
