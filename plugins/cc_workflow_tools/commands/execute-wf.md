@@ -163,36 +163,13 @@ Use the Task tool to invoke feature-writer:
 - **model**: `"sonnet"` (agent default)
 - **prompt**:
 ```
-Implement the feature defined in reviewed specs: $SPEC_FILE
+Implement feature from spec: $SPEC_FILE
 
-The beads epic and phase tasks have been created based on the reviewed specs.
-
-⚠️ CRITICAL: Do NOT spawn another feature-writer agent. Execute ALL phases
-in THIS invocation using an internal loop. After completing each phase,
-query beads for the next ready task and continue - do not spawn a new agent.
-
-Your responsibilities (in a loop):
-1. Query beads for the next ready task (bd ready --json)
-2. If no ready tasks and epic closed → EXIT SUCCESS
-3. If ready task exists:
-   - Update task to in_progress
-   - Execute the appropriate command based on task title
-   - Close the task on success
-   - Loop back to step 1 (DO NOT spawn new agent)
-
-Task routing:
+Beads tasks are ready. Process them sequentially:
 - "Phase N: ..." → /execute-wf:implement-phase $SPEC_FILE <test_spec_file> --auto
 - "Validation" → /execute-wf:check-work $SPEC_FILE <test_spec_file>
 
-Key details:
-- Spec file: $SPEC_FILE
-- Test spec file: <test_spec_file> (derived from spec filename)
-- Use --auto flag for non-interactive implementation
-- Follow TDD approach for each phase
-
-When all tasks complete:
-- Close the epic
-- Output completion summary with phase count and test results
+When done, close the epic and output summary.
 ```
 
 **Feature-writer agent will:**
